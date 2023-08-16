@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+    body {
+        margin: auto;
+        font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+        overflow: auto;
+        background: linear-gradient(315deg, rgba(101,0,94,1) 3%, rgb(150, 192, 159) 38%, rgb(175, 206, 205) 68%, rgb(247, 3, 3) 98%);
+        animation: gradient 15s ease infinite;
+        background-size: 400% 400%;
+        background-attachment: fixed;
+    }
+    
+    @keyframes gradient {
+        0% {
+            background-position: 0% 0%;
+        }
+        50% {
+            background-position: 100% 100%;
+        }
+        100% {
+            background-position: 0% 0%;
+        }
+    }
+    
+    .wave {
+        background: rgba(109, 114, 157, 0.25);
+        border-radius: 1000% 1000% 0 0;
+        position: fixed;
+        width: 200%;
+        height: 12em;
+        animation: wave 10s -3s linear infinite;
+        transform: translate3d(0, 0, 0);
+        opacity: 0.8;
+        bottom: 0;
+        left: 0;
+        z-index: -1;
+    }
+    
+    .wave:nth-of-type(2) {
+        bottom: -1.25em;
+        animation: wave 18s linear reverse infinite;
+        opacity: 0.8;
+    }
+    
+    .wave:nth-of-type(3) {
+        bottom: -2.5em;
+        animation: wave 20s -1s reverse infinite;
+        opacity: 0.9;
+    }
+    
+    @keyframes wave {
+        2% {
+            transform: translateX(1);
+        }
+    
+        25% {
+            transform: translateX(-25%);
+        }
+    
+        50% {
+            transform: translateX(-50%);
+        }
+    
+        75% {
+            transform: translateX(-25%);
+        }
+    
+        100% {
+            transform: translateX(1);
+        }
+    }
+    
+    /* Novos estilos integrados */
+    ul {
+        width: 80%;
+        margin: 0 auto;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        padding: 0;
+        list-style: none;
+    }
+    
+    li {
+        padding: 15px;
+        border-bottom: 1px solid #ddd;
+    }
+    
+    li:last-child {
+        border-bottom: none;
+    }
+    
+    table {
+        width: 80%;
+        margin: 0 auto;
+        background-color: inherit;
+        border-collapse: collapse;
+        box-shadow:  0 0 10px rgba(254, 254, 254, 0.1);
+     
+        
+    }
+    
+    th, td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+    
+    th {
+        background-color: #f2f2f2;
+    }
+    
+    input[type="text"] {
+        padding: 10px;
+        width: 48%;
+        margin-bottom: 10px;
+        box-sizing: border-box;
+        border: 1px solid #ddd;
+    }
+    
+    button {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        padding: 10px 15px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    
+    button:hover {
+        background-color: #0056b3;
+    }
+    h1{
+        text-align: center;
+        color:rgb(6, 0, 0)
+    }
+    body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(315deg, rgba(101, 0, 94, 1) 3%, rgb(150, 192, 159) 38%, rgb(175, 206, 205) 68%, rgb(247, 3, 3) 98%);
+            animation: gradient 15s ease infinite;
+            background-size: 400% 400%;
+            background-attachment: fixed;
+        }
+
+        @keyframes gradient {
+            0% {
+                background-position: 0% 0%;
+            }
+            50% {
+                background-position: 100% 100%;
+            }
+            100% {
+                background-position: 0% 0%;
+            }
+        }
+
+        /* Estilos para dispositivos pequenos (até 768px) */
+
+        @media (max-width: 768px) {
+            /* Estilos para tornar o cabeçalho centralizado */
+            h1 {
+                text-align: center;
+                margin-top: 20px;
+            }
+            /* Estilos para os botões de ordenação e campo de busca */
+            button,
+            input[type="text"] {
+                display: block;
+                margin: 10px auto;
+                width: 80%;
+            }
+            /* Estilos para a tabela */
+            table {
+                width: 100%;
+            }
+            /* Estilos para as células da tabela */
+            th,
+            td {
+                padding: 8px;
+                font-size: 12px;
+            }
+        }
+
+    
+      </style>
+</head>
+<body>
+  <h1>Biblioteca do Alex</h1>
+  <div style="text-align: center; margin-top: 20px;">
+    <button id="sortTitleButton">Ordenar por Título</button>
+    <button id="sortAuthorButton">Ordenar por Autor</button>
+    <button id="sortYearButton">Ordenar por Ano de Publicação</button>
+    <input type="text" id="searchInput" placeholder="Buscar por título, autor ou ano...">
+
+  </div>
+  
+  <table>
+    <thead>
+      <tr>
+        <th>Título</th>
+        <th>Autor</th>
+        <th>Ano</th>
+      </tr>
+    </thead>
+    <tbody id="bookList">
+      <tr data-title="A divina comédia" data-author="Dante Alighieri" data-year="1321">
+        <td>A divina comédia</td>
+        <td>Dante Alighieri</td>
+        <td>1321</td>
+      </tr>
+      <tr data-title="Decamerão" data-author="Giovanni Boccaccio" data-year="1353">
+        <td>Decamerão</td>
+        <td>Giovanni Boccaccio</td>
+        <td>1353</td>
+      </tr>
+      <tr data-title="Romeu e Julieta" data-author="Shakespeare" data-year="1595">
+        <td>Romeu e Julieta</td>
+        <td>Shakespeare</td>
+        <td>1595</td>
+      </tr>
+      <tr data-title="Os Lusíadas" data-author="Camões" data-year="1572">
+        <td>Os Lusíadas</td>
+        <td>Camões</td>
+        <td>1572</td>
+      </tr>
+      <tr data-title="Dom Quixote de la Mancha" data-author="Cervantes" data-year="1605">
+        <td>Dom Quixote de la Mancha</td>
+        <td>Cervantes</td>
+        <td>1605</td>
+      </tr>
+      <tr data-title="Moby Dick" data-author="Herman Melville" data-year="1851">
+        <td>Moby Dick</td>
+        <td>Herman Melville</td>
+        <td>1851</td>
+      </tr>
+      <tr data-title="Crime e Castigo" data-author="Fiódor Dostoiévski" data-year="1866">
+        <td>Crime e Castigo</td>
+        <td>Fiódor Dostoiévski</td>
+        <td>1866</td>
+      </tr>
+      <tr data-title="A Origem das Espécies" data-author="Charles Darwin" data-year="1859">
+        <td>A Origem das Espécies</td>
+        <td>Charles Darwin</td>
+        <td>1859</td>
+      </tr>
+      <tr data-title="Cem Anos de Solidão" data-author="Gabriel García Márquez" data-year="1967">
+        <td>Cem Anos de Solidão</td>
+        <td>Gabriel García Márquez</td>
+        <td>1967</td>
+      </tr>
+      <tr data-title="1984" data-author="George Orwell" data-year="1949">
+        <td>1984</td>
+        <td>George Orwell</td>
+        <td>1949</td>
+      </tr>
+      <tr data-title="O Senhor dos Anéis" data-author="J.R.R. Tolkien" data-year="1954">
+        <td>O Senhor dos Anéis</td>
+        <td>J.R.R. Tolkien</td>
+        <td>1954</td>
+      </tr>
+      <tr data-title="A Revolução dos Bichos" data-author="George Orwell" data-year="1945">
+        <td>A Revolução dos Bichos</td>
+        <td>George Orwell</td>
+        <td>1945</td>
+      </tr>
+      <tr data-title="O Pequeno Príncipe" data-author="Antoine de Saint-Exupéry" data-year="1943">
+        <td>O Pequeno Príncipe</td>
+        <td>Antoine de Saint-Exupéry</td>
+        <td>1943</td>
+      </tr>
+      <tr data-title="O Apanhador no Campo de Centeio" data-author="J.D. Salinger" data-year="1951">
+        <td>O Apanhador no Campo de Centeio</td>
+        <td>J.D. Salinger</td>
+        <td>1951</td>
+      </tr>
+      <tr data-title="Ulisses" data-author="James Joyce" data-year="1922">
+        <td>Ulisses</td>
+        <td>James Joyce</td>
+        <td>1922</td>
+      </tr>
+      <tr data-title="A Guerra dos Tronos" data-author="George R.R. Martin" data-year="1996">
+        <td>A Guerra dos Tronos</td>
+        <td>George R.R. Martin</td>
+        <td>1996</td>
+      </tr>
+      <tr data-title="O Sol é para Todos" data-author="Harper Lee" data-year="1960">
+        <td>O Sol é para Todos</td>
+        <td>Harper Lee</td>
+        <td>1960</td>
+      </tr>
+      <tr data-title="Orgulho e Preconceito" data-author="Jane Austen" data-year="1813">
+        <td>Orgulho e Preconceito</td>
+        <td>Jane Austen</td>
+        <td>1813</td>
+      </tr>
+      <tr data-title="A Metamorfose" data-author="Franz Kafka" data-year="1915">
+        <td>A Metamorfose</td>
+        <td>Franz Kafka</td>
+        <td>1915</td>
+      </tr>
+      <tr data-title="Dom Casmurro" data-author="Machado de Assis" data-year="1899">
+        <td>Dom Casmurro</td>
+        <td>Machado de Assis</td>
+        <td>1899</td>
+      </tr>
+      <tr data-title="Cemitério Maldito" data-author="Stephen King" data-year="1983">
+        <td>Cemitério Maldito</td>
+        <td>Stephen King</td>
+        <td>1983</td>
+      </tr>
+      <tr data-title="O Hobbit" data-author="J.R.R. Tolkien" data-year="1937">
+        <td>O Hobbit</td>
+        <td>J.R.R. Tolkien</td>
+        <td>1937</td>
+      </tr>
+      <tr data-title="O Retrato de Dorian Gray" data-author="Oscar Wilde" data-year="1890">
+        <td>O Retrato de Dorian Gray</td>
+        <td>Oscar Wilde</td>
+        <td>1890</td>
+      </tr>
+      <tr data-title="A Revolta de Atlas" data-author="Ayn Rand" data-year="1957">
+        <td>A Revolta de Atlas</td>
+        <td>Ayn Rand</td>
+        <td>1957</td>
+      </tr>
+      <tr data-title="A Culpa é das Estrelas" data-author="John Green" data-year="2012">
+        <td>A Culpa é das Estrelas</td>
+        <td>John Green</td>
+        <td>2012</td>
+      </tr>
+      <tr data-title="O Código Da Vinci" data-author="Dan Brown" data-year="2003">
+        <td>O Código Da Vinci</td>
+        <td>Dan Brown</td>
+        <td>2003</td>
+      </tr>
+      <tr data-title="O Alquimista" data-author="Paulo Coelho" data-year="1988">
+        <td>O Alquimista</td>
+        <td>Paulo Coelho</td>
+        <td>1988</td>
+      </tr>
+      <tr data-title="O Lobo do Mar" data-author="Jack London" data-year="1904">
+        <td>O Lobo do Mar</td>
+        <td>Jack London</td>
+        <td>1904</td>
+      </tr>
+      <tr data-title="O Grande Gatsby" data-author="F. Scott Fitzgerald" data-year="1925">
+        <td>O Grande Gatsby</td>
+        <td>F. Scott Fitzgerald</td>
+        <td>1925</td>
+      </tr>
+      <tr data-title="O Apanhador no Campo de Centeio" data-author="J.D. Salinger" data-year="1951">
+        <td>O Apanhador no Campo de Centeio</td>
+        <td>J.D. Salinger</td>
+        <td>1951</td>
+      </tr>
+      <tr data-title="Ulisses" data-author="James Joyce" data-year="1922">
+        <td>Ulisses</td>
+        <td>James Joyce</td>
+        <td>1922</td>
+      </tr>
+      <tr data-title="A Guerra dos Tronos" data-author="George R.R. Martin" data-year="1996">
+        <td>A Guerra dos Tronos</td>
+        <td>George R.R. Martin</td>
+        <td>1996</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <body>
+    <div>
+       <div class="wave"></div>
+       <div class="wave"></div>
+       <div class="wave"></div>
+    </div>
+  </body>
+
+  <script>
+    const bookTable = document.querySelector("table tbody");
+    const searchInput = document.getElementById("searchInput");
+    const sortTitleButton = document.getElementById("sortTitleButton");
+    const sortAuthorButton = document.getElementById("sortAuthorButton");
+    const sortYearButton = document.getElementById("sortYearButton");
+
+    // Os dados dos livros
+    const books = [
+  { title: "A divina comédia", author: "Dante Alighieri", year: 1321 },
+  { title: "Decamerão", author: "Giovanni Boccaccio", year: 1353 },
+  { title: "Romeu e Julieta", author: "Shakespeare", year: 1595 },
+  { title: "Os Lusíadas", author: "Camões", year: 1572 },
+  { title: "Dom Quixote de la Mancha", author: "Cervantes", year: 1605 },
+  { title: "Moby Dick", author: "Herman Melville", year: 1851 },
+  { title: "Crime e Castigo", author: "Fiódor Dostoiévski", year: 1866 },
+  { title: "A Origem das Espécies", author: "Charles Darwin", year: 1859 },
+  { title: "Cem Anos de Solidão", author: "Gabriel García Márquez", year: 1967 },
+  { title: "1984", author: "George Orwell", year: 1949 },
+  { title: "O Senhor dos Anéis", author: "J.R.R. Tolkien", year: 1954 },
+  { title: "A Revolução dos Bichos", author: "George Orwell", year: 1945 },
+  { title: "O Pequeno Príncipe", author: "Antoine de Saint-Exupéry", year: 1943 },
+  { title: "O Apanhador no Campo de Centeio", author: "J.D. Salinger", year: 1951 },
+  { title: "Ulisses", author: "James Joyce", year: 1922 },
+  { title: "A Guerra dos Tronos", author: "George R.R. Martin", year: 1996 },
+  { title: "O Sol é para Todos", author: "Harper Lee", year: 1960 },
+  { title: "Orgulho e Preconceito", author: "Jane Austen", year: 1813 },
+  { title: "A Metamorfose", author: "Franz Kafka", year: 1915 },
+  { title: "Dom Casmurro", author: "Machado de Assis", year: 1899 },
+  { title: "Cemitério Maldito", author: "Stephen King", year: 1983 },
+  { title: "O Hobbit", author: "J.R.R. Tolkien", year: 1937 },
+  { title: "O Retrato de Dorian Gray", author: "Oscar Wilde", year: 1890 },
+  { title: "A Revolta de Atlas", author: "Ayn Rand", year: 1957 },
+  { title: "A Culpa é das Estrelas", author: "John Green", year: 2012 },
+  { title: "O Código Da Vinci", author: "Dan Brown", year: 2003 },
+  { title: "O Alquimista", author: "Paulo Coelho", year: 1988 },
+  { title: "O Lobo do Mar", author: "Jack London", year: 1904 },
+  { title: "O Grande Gatsby", author: "F. Scott Fitzgerald", year: 1925 },
+  { title: "O Apanhador no Campo de Centeio", author: "J.D. Salinger", year: 1951 },
+  { title: "Ulisses", author: "James Joyce", year: 1922 },
+  { title: "A Guerra dos Tronos", author: "George R.R. Martin", year: 1996 },
+  // Adicione mais livros aqui
+];
+// Função para remover acentos de uma string
+function removeAccents(str) {
+      return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    }
+
+
+    // Preenche a tabela com os dados dos livros
+    function fillTable() {
+      bookTable.innerHTML = "";
+      books.forEach(book => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${book.title}</td>
+          <td>${book.author}</td>
+          <td>${book.year}</td>
+        `;
+        bookTable.appendChild(tr);
+      });
+    }
+
+    // Inicializa a tabela
+    fillTable();
+
+    sortTitleButton.addEventListener("click", () => sortBooks("title"));
+    sortAuthorButton.addEventListener("click", () => sortBooks("author"));
+    sortYearButton.addEventListener("click", () => sortBooks("year"));
+
+    // Função para ordenar os livros
+    function sortBooks(criteria) {
+      books.sort((a, b) => {
+        const aValue = a[criteria];
+        const bValue = b[criteria];
+
+        if (criteria === "year") {
+          return aValue - bValue;
+        } else {
+          return aValue.localeCompare(bValue);
+        }
+      });
+
+      fillTable();
+    }
+
+ // Função para filtrar os livros conforme a busca
+ searchInput.addEventListener("input", () => {
+      const searchTerm = removeAccents(searchInput.value.toLowerCase());
+      const filteredBooks = books.filter(book => {
+        const title = removeAccents(book.title.toLowerCase());
+        const author = removeAccents(book.author.toLowerCase());
+        return title.includes(searchTerm) || author.includes(searchTerm) || String(book.year).includes(searchTerm);
+      });
+
+      bookTable.innerHTML = "";
+      filteredBooks.forEach(book => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${book.title}</td>
+          <td>${book.author}</td>
+          <td>${book.year}</td>
+        `;
+        bookTable.appendChild(tr);
+      });
+    });
+  </script>
+</body>
+</html>
